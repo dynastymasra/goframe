@@ -3,6 +3,7 @@ package config
 const (
 	ServiceName = "Goframe"
 	Version     = "0.1.0"
+	RequestID   = "requestId"
 
 	// Service port address
 	envServerPort = "SERVER_PORT"
