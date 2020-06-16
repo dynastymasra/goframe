@@ -3,6 +3,8 @@ package config
 import (
 	"log"
 
+	"github.com/dynastymasra/goframe/infrastructure/provider"
+
 	"github.com/dynastymasra/cookbook"
 	"github.com/spf13/viper"
 )
@@ -10,6 +12,7 @@ import (
 type Config struct {
 	serverPort string
 	logger     LoggerConfig
+	postgres   provider.Postgres
 }
 
 var config *Config
@@ -37,6 +40,15 @@ func Load() {
 			level:  getString(envLoggerLevel),
 			caller: getBool(envLoggerCaller),
 		},
+		postgres: provider.Postgres{
+			DatabaseName: getString(envPostgresDBName),
+			Address:      getString(envPostgresAddress),
+			Username:     getString(envPostgresUsername),
+			Password:     getString(envPostgresPassword),
+			MaxIdleConn:  getInt(envPostgresMaxIdleConn),
+			MaxOpenConn:  getInt(envPostgresMaxOpenConn),
+			LogEnabled:   getBool(envPostgresLogEnabled),
+		},
 	}
 }
 
@@ -46,6 +58,10 @@ func ServerPort() string {
 
 func Logger() LoggerConfig {
 	return config.logger
+}
+
+func Postgres() provider.Postgres {
+	return config.postgres
 }
 
 func getString(key string) string {

@@ -10,4 +10,6 @@ require (
 	github.com/matryer/resync v0.0.0-20161211202428-d39c09a11215
 	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/viper v1.7.0
+	github.com/urfave/cli/v2 v2.2.0 // indirect
+	gopkg.in/tylerb/graceful.v1 v1.2.15 // indirect
 )
