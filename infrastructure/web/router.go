@@ -19,8 +19,7 @@ import (
 const DefaultResponseNotFound = "the requested resource doesn't exists"
 
 type RouterInstance struct {
-	ServiceName string
-	DB          *gorm.DB
+	DB *gorm.DB
 }
 
 func (r *RouterInstance) Router() *mux.Router {
@@ -56,7 +55,7 @@ func (r *RouterInstance) Router() *mux.Router {
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	_ = router.PathPrefix("/v1/").Subrouter().UseEncodedPath()
-	commonHandlers.Use(middleware.LogrusLog(r.ServiceName, config.RequestID))
+	commonHandlers.Use(middleware.LogrusLog(config.ServiceName, config.RequestID))
 
 	return router
 }

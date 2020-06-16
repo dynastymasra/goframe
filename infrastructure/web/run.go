@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dynastymasra/goframe/config"
+
 	"github.com/gorilla/handlers"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/tylerb/graceful.v1"
@@ -12,7 +14,7 @@ import (
 func Run(server *graceful.Server, port string, router *RouterInstance) error {
 	log := logrus.WithFields(logrus.Fields{
 		"port":        port,
-		"serviceName": router.ServiceName,
+		"serviceName": config.ServiceName,
 	})
 
 	log.Infoln("Start run web application")
@@ -31,8 +33,6 @@ func Run(server *graceful.Server, port string, router *RouterInstance) error {
 		log.WithError(err).Errorln("Failed run web application")
 		return err
 	}
-
-	log.Infoln("Web application is running")
 
 	return nil
 }

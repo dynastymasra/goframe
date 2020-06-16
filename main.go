@@ -6,6 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/dynastymasra/goframe/infrastructure/web"
+
 	"github.com/dynastymasra/goframe/console"
 
 	"github.com/dynastymasra/goframe/config"
@@ -49,6 +51,16 @@ func main() {
 			Timeout: 0,
 		}
 
+		router := &web.RouterInstance{
+			DB: db,
+		}
+
+		go func(server *graceful.Server, port string, router *web.RouterInstance) {
+			if err := web.Run(server, port, router); err != nil {
+				log.WithError(err).Fatalln("Failed start web application")
+			}
+		}(webServer, config.ServerPort(), router)
+
 		select {
 		case sig := <-stop:
 			<-webServer.StopChan()
@@ -68,8 +80,7 @@ func main() {
 				logrus.Infoln("Start database migration")
 
 				if err := console.RunMigration(migration); err != nil {
-					logrus.WithError(err).Errorln("Failed run database migration")
-					os.Exit(1)
+					logrus.WithError(err).Fatalln("Failed run database migration")
 				}
 
 				logrus.Infoln("Success run database migration ")
@@ -83,8 +94,7 @@ func main() {
 				logrus.Infoln("Rollback database migration to previous version")
 
 				if err := console.RollbackMigration(migration); err != nil {
-					logrus.WithError(err).Errorln("Failed rollback database migration")
-					os.Exit(1)
+					logrus.WithError(err).Fatalln("Failed rollback database migration")
 				}
 
 				logrus.Infoln("Success rollback database migration to latest")
@@ -101,6 +111,6 @@ func main() {
 	}
 
 	if err := clientApp.Run(os.Args); err != nil {
-		panic(err)
+		log.WithError(err).Fatalln("Failed start application")
 	}
 }

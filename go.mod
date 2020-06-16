@@ -6,6 +6,7 @@ require (
 	github.com/cheekybits/is v0.0.0-20150225183255-68e9c0620927 // indirect
 	github.com/dynastymasra/cookbook v1.9.1
 	github.com/golang-migrate/migrate/v4 v4.11.0
+	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.7.4
 	github.com/jinzhu/gorm v1.9.13
 	github.com/matryer/resync v0.0.0-20161211202428-d39c09a11215
