@@ -8,11 +8,10 @@ const (
 	envServerPort = "SERVER_PORT"
 	envGRPCPort   = "GRPC_PORT"
 
-	envServerKey = "SERVER_KEY"
-
 	// Logger config
 	envLoggerFormat = "LOGGER_FORMAT"
 	envLoggerLevel  = "LOGGER_LEVEL"
+	envLoggerCaller = "LOGGER_CALLER_ENABLED"
 
 	// Postgres config
 	envPostgresDBName      = "POSTGRES_DATABASE_NAME"
