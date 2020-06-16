@@ -1,2 +1,2 @@
-# goframe
+# Goframe
 Go skeleton
