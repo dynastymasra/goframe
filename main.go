@@ -1,10 +1,15 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
+
+	"github.com/gorilla/handlers"
 
 	"github.com/dynastymasra/goframe/infrastructure/web"
 
@@ -13,7 +18,6 @@ import (
 	"github.com/dynastymasra/goframe/config"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
-	"gopkg.in/tylerb/graceful.v1"
 )
 
 func init() {
@@ -23,11 +27,12 @@ func init() {
 
 func main() {
 	stop := make(chan os.Signal)
-	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
+	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT, os.Interrupt)
 
 	log := logrus.WithFields(logrus.Fields{
 		"serviceName": config.ServiceName,
 		"version":     config.Version,
+		"port":        config.ServerPort(),
 	})
 
 	log.Infoln("Prepare start service")
@@ -47,23 +52,34 @@ func main() {
 	clientApp.Version = config.Version
 
 	clientApp.Action = func(c *cli.Context) error {
-		webServer := &graceful.Server{
-			Timeout: 0,
-		}
-
 		router := &web.RouterInstance{
 			DB: db,
 		}
 
-		go func(server *graceful.Server, port string, router *web.RouterInstance) {
-			if err := web.Run(server, port, router); err != nil {
+		srv := &http.Server{
+			Addr: fmt.Sprintf(":%s", config.ServerPort()),
+			Handler: handlers.RecoveryHandler(
+				handlers.PrintRecoveryStack(true),
+				handlers.RecoveryLogger(logrus.StandardLogger()),
+			)(router.Router()),
+		}
+
+		go func() {
+			if err := srv.ListenAndServe(); err != nil {
 				log.WithError(err).Fatalln("Failed start web application")
 			}
-		}(webServer, config.ServerPort(), router)
+		}()
+
+		log.Infoln("Web application is running")
 
 		select {
 		case sig := <-stop:
-			<-webServer.StopChan()
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			if err := srv.Shutdown(ctx); err != nil {
+				log.WithError(err).Fatalln("Failed shutdown web application")
+			}
 
 			log.Warnln(fmt.Sprintf("Service shutdown because %+v", sig))
 			os.Exit(0)
