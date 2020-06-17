@@ -13,6 +13,7 @@ type Config struct {
 	serverPort string
 	logger     LoggerConfig
 	postgres   provider.Postgres
+	neo4j      provider.Neo4J
 }
 
 var config *Config
@@ -49,6 +50,15 @@ func Load() {
 			MaxOpenConn:  getInt(envPostgresMaxOpenConn),
 			LogEnabled:   getBool(envPostgresLogEnabled),
 		},
+		neo4j: provider.Neo4J{
+			Address:     getString(envNeo4JAddress),
+			Username:    getString(envNeo4JUsername),
+			Password:    getString(envNeo4JPassword),
+			MaxConnPool: getInt(envNeo4JMaxConnPool),
+			Encrypted:   getBool(envNeo4JEncrypted),
+			LogEnabled:  getBool(envNeo4JLogEnabled),
+			LogLevel:    getInt(envNeo4JLogLevel),
+		},
 	}
 }
 
@@ -62,6 +72,10 @@ func Logger() LoggerConfig {
 
 func Postgres() provider.Postgres {
 	return config.postgres
+}
+
+func Neo4J() provider.Neo4J {
+	return config.neo4j
 }
 
 func getString(key string) string {
