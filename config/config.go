@@ -14,6 +14,7 @@ type Config struct {
 	logger     LoggerConfig
 	postgres   provider.Postgres
 	neo4j      provider.Neo4J
+	mongodb    provider.MongoDB
 }
 
 var config *Config
@@ -59,6 +60,13 @@ func Load() {
 			LogEnabled:  getBool(envNeo4JLogEnabled),
 			LogLevel:    getInt(envNeo4JLogLevel),
 		},
+		mongodb: provider.MongoDB{
+			Format:   getString(envMongoFormat),
+			Address:  getString(envMongoAddress),
+			Username: getString(envMongoUsername),
+			Password: getString(envMongoPassword),
+			Database: getString(envMongoDatabase),
+		},
 	}
 }
 
@@ -76,6 +84,10 @@ func Postgres() provider.Postgres {
 
 func Neo4J() provider.Neo4J {
 	return config.neo4j
+}
+
+func MongoDB() provider.MongoDB {
+	return config.mongodb
 }
 
 func getString(key string) string {

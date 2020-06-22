@@ -33,6 +33,7 @@ const (
 	envNeo4JLogLevel    = "NEO4J_LOG_LEVEL"
 
 	// MongoDB config
+	envMongoFormat   = "MONGO_FORMAT"
 	envMongoAddress  = "MONGO_ADDRESS"
 	envMongoDatabase = "MONGO_DATABASE"
 	envMongoUsername = "MONGO_USERNAME"

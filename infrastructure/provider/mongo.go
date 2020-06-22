@@ -17,16 +17,16 @@ var (
 	runMongo resync.Once
 )
 
-type Mongo struct {
-	Type     string
+type MongoDB struct {
+	Format   string
 	Address  string
 	Username string
 	Password string
 	Database string
 }
 
-func (m *Mongo) Client() (*mongo.Client, error) {
-	url := fmt.Sprintf("%s://%s:%s@%s/%s", m.Type, m.Username, m.Password, m.Address, m.Database)
+func (m *MongoDB) Client() (*mongo.Client, error) {
+	url := fmt.Sprintf("%s://%s:%s@%s/%s", m.Format, m.Username, m.Password, m.Address, m.Database)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
