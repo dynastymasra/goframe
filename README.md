@@ -77,4 +77,8 @@ go tool cover -html=coverage.out
 + `MONGO_USERNAME` - MongoDB username
 + `MONGO_PASSWORD` - MongoDB password
 + `MONGO_MAX_POOL` - MongoDB max pool connection
-
++ `ELASTICSEARCH_ADDRESS` - Elasticsearch urls, use `,` to separate urls `http://localhost:9200,http://localhost:9201`
++ `ELASTICSEARCH_USERNAME` - Elasticsearch username
++ `ELASTICSEARCH_PASSWORD` - Elasticsearch password
++ `ELASTICSEARCH_MAX_CONN_PER_HOST` - Elasticsearch max connection per hosts
++ `ELASTICSEARCH_MAX_IDLE_PER_HOST` - Elasticsearch max idle connection per hosts
