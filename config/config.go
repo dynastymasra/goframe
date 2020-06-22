@@ -43,7 +43,7 @@ func Load() {
 			caller: getBool(envLoggerCaller),
 		},
 		postgres: provider.Postgres{
-			DatabaseName: getString(envPostgresDBName),
+			DatabaseName: getString(envPostgresDatabase),
 			Address:      getString(envPostgresAddress),
 			Username:     getString(envPostgresUsername),
 			Password:     getString(envPostgresPassword),

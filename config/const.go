@@ -15,7 +15,7 @@ const (
 	envLoggerCaller = "LOGGER_CALLER_ENABLED"
 
 	// Postgres config
-	envPostgresDBName      = "POSTGRES_DATABASE_NAME"
+	envPostgresDatabase    = "POSTGRES_DATABASE"
 	envPostgresAddress     = "POSTGRES_ADDRESS"
 	envPostgresUsername    = "POSTGRES_USERNAME"
 	envPostgresPassword    = "POSTGRES_PASSWORD"
