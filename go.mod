@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/cheekybits/is v0.0.0-20150225183255-68e9c0620927 // indirect
 	github.com/dynastymasra/cookbook v1.9.2
+	github.com/elastic/go-elasticsearch/v7 v7.8.0
 	github.com/golang-migrate/migrate/v4 v4.11.0
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.7.4

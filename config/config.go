@@ -15,6 +15,7 @@ type Config struct {
 	postgres   provider.Postgres
 	neo4j      provider.Neo4J
 	mongodb    provider.MongoDB
+	elastic    provider.Elasticsearch
 }
 
 var config *Config
@@ -67,6 +68,13 @@ func Load() {
 			Database:    getString(envMongoDatabase),
 			MaxPoolSize: getInt(envMongoMaxPool),
 		},
+		elastic: provider.Elasticsearch{
+			Address:        getString(envElasticsearchAddress),
+			Username:       getString(envElasticsearchUsername),
+			Password:       getString(envElasticsearchPassword),
+			MaxConnPerHost: getInt(envElasticsearchMaxConnPerHost),
+			MaxIdlePerHost: getInt(envElasticsearchMaxIdlePerHost),
+		},
 	}
 }
 
@@ -88,6 +96,10 @@ func Neo4J() provider.Neo4J {
 
 func MongoDB() provider.MongoDB {
 	return config.mongodb
+}
+
+func Elasticsearch() provider.Elasticsearch {
+	return config.elastic
 }
 
 func getString(key string) string {

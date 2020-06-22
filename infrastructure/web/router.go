@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/elastic/go-elasticsearch/v7"
+
 	"github.com/neo4j/neo4j-go-driver/neo4j"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -25,6 +27,7 @@ type RouterInstance struct {
 	PostgresDB  *gorm.DB
 	Neo4JDriver neo4j.Driver
 	MongoClient *mongo.Client
+	EsClient    *elasticsearch.Client
 }
 
 func (r *RouterInstance) Router() *mux.Router {
@@ -52,11 +55,11 @@ func (r *RouterInstance) Router() *mux.Router {
 
 	// Probes
 	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient)),
+		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient, r.EsClient)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient)),
+		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient, r.EsClient)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	_ = router.PathPrefix("/v1/").Subrouter().UseEncodedPath()

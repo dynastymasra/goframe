@@ -38,4 +38,11 @@ const (
 	envMongoUsername = "MONGO_USERNAME"
 	envMongoPassword = "MONGO_PASSWORD"
 	envMongoMaxPool  = "MONGO_MAX_POOL"
+
+	// Elasticsearch config
+	envElasticsearchAddress        = "ELASTICSEARCH_ADDRESS"
+	envElasticsearchUsername       = "ELASTICSEARCH_USERNAME"
+	envElasticsearchPassword       = "ELASTICSEARCH_PASSWORD"
+	envElasticsearchMaxConnPerHost = "ELASTICSEARCH_MAX_CONN_PER_HOST"
+	envElasticsearchMaxIdlePerHost = "ELASTICSEARCH_MAX_IDLE_PER_HOST"
 )

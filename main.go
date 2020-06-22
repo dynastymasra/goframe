@@ -55,6 +55,12 @@ func main() {
 		log.WithError(err).Fatalln("Failed connect to MongoDB")
 	}
 
+	// Remove this database if not used
+	esClient, err := config.Elasticsearch().Client()
+	if err != nil {
+		log.WithError(err).Fatalln("Failed connect to Elasticsearch")
+	}
+
 	migration, err := console.Migration(db)
 	if err != nil {
 		log.WithError(err).Fatalln("Failed run migration")
@@ -69,6 +75,7 @@ func main() {
 			PostgresDB:  db,
 			Neo4JDriver: driver,
 			MongoClient: client,
+			EsClient:    esClient,
 		}
 
 		srv := &http.Server{
