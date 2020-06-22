@@ -11,7 +11,6 @@ require (
 	github.com/jinzhu/gorm v1.9.13
 	github.com/matryer/resync v0.0.0-20161211202428-d39c09a11215
 	github.com/neo4j/neo4j-go-driver v1.7.4
-	github.com/ory/graceful v0.1.1
 	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/viper v1.7.0
 	github.com/urfave/cli/v2 v2.2.0

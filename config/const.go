@@ -31,4 +31,10 @@ const (
 	envNeo4JEncrypted   = "NEO4J_ENCRYPTED"
 	envNeo4JLogEnabled  = "NEO4J_LOG_ENABLED"
 	envNeo4JLogLevel    = "NEO4J_LOG_LEVEL"
+
+	// MongoDB config
+	envMongoAddress  = "MONGO_ADDRESS"
+	envMongoDatabase = "MONGO_DATABASE"
+	envMongoUsername = "MONGO_USERNAME"
+	envMongoPassword = "MONGO_PASSWORD"
 )
