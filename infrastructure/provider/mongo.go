@@ -2,41 +2,60 @@ package provider
 
 import (
 	"context"
-	"fmt"
-	"time"
+
+	"github.com/matryer/resync"
 
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"github.com/matryer/resync"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var (
-	client   *mongo.Client
-	errMongo error
-	runMongo resync.Once
+	mongoClient *mongo.Client
+	errMongo    error
+	runMongo    resync.Once
 )
 
 type MongoDB struct {
-	Format   string
-	Address  string
-	Username string
-	Password string
-	Database string
+	Address     string
+	Username    string
+	Password    string
+	Database    string
+	MaxPoolSize int
 }
 
-func (m *MongoDB) Client() (*mongo.Client, error) {
-	url := fmt.Sprintf("%s://%s:%s@%s/%s", m.Format, m.Username, m.Password, m.Address, m.Database)
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+func (m MongoDB) Client() (*mongo.Client, error) {
+	auth := options.Credential{
+		AuthSource:  m.Database,
+		Username:    m.Password,
+		Password:    m.Password,
+		PasswordSet: true,
+	}
 
 	runMongo.Do(func() {
-		client, errMongo = mongo.NewClient(options.Client().ApplyURI(url))
+		mongoClient, errMongo = mongo.NewClient(options.Client().
+			SetAuth(auth).
+			SetMaxPoolSize(uint64(m.MaxPoolSize)).
+			ApplyURI(m.Address))
 
-		errMongo = client.Connect(ctx)
-
-		errMongo = client.Ping(ctx, nil)
+		errMongo = mongoClient.Connect(context.Background())
 	})
 
-	return client, errMongo
+	if err := mongoClient.Ping(context.Background(), nil); err != nil {
+		return nil, err
+	}
+
+	return mongoClient, errMongo
+}
+
+func (m MongoDB) Ping() error {
+	if mongoClient == nil {
+		return mongo.ErrClientDisconnected
+	}
+
+	if err := mongoClient.Ping(context.Background(), nil); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/neo4j/neo4j-go-driver/neo4j"
+	"go.mongodb.org/mongo-driver/mongo"
+
 	"github.com/dynastymasra/goframe/config"
 
 	"github.com/dynastymasra/cookbook/negroni/middleware"
@@ -19,7 +22,9 @@ import (
 const DefaultResponseNotFound = "the requested resource doesn't exists"
 
 type RouterInstance struct {
-	DB *gorm.DB
+	PostgresDB  *gorm.DB
+	Neo4JDriver neo4j.Driver
+	MongoClient *mongo.Client
 }
 
 func (r *RouterInstance) Router() *mux.Router {
@@ -47,11 +52,11 @@ func (r *RouterInstance) Router() *mux.Router {
 
 	// Probes
 	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(handler.Ping(r.DB)),
+		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(handler.Ping(r.DB)),
+		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	_ = router.PathPrefix("/v1/").Subrouter().UseEncodedPath()

@@ -37,9 +37,22 @@ func main() {
 
 	log.Infoln("Prepare start service")
 
+	// Remove this database if not used
 	db, err := config.Postgres().Client()
 	if err != nil {
-		log.WithError(err).Fatalln("Failed connect to postgres")
+		log.WithError(err).Fatalln("Failed connect to Postgres")
+	}
+
+	// Remove this database if not used
+	driver, err := config.Neo4J().Driver()
+	if err != nil {
+		log.WithError(err).Fatalln("Failed connect to Neo4J")
+	}
+
+	// Remove this database if not used
+	client, err := config.MongoDB().Client()
+	if err != nil {
+		log.WithError(err).Fatalln("Failed connect to MongoDB")
 	}
 
 	migration, err := console.Migration(db)
@@ -53,7 +66,9 @@ func main() {
 
 	clientApp.Action = func(c *cli.Context) error {
 		router := &web.RouterInstance{
-			DB: db,
+			PostgresDB:  db,
+			Neo4JDriver: driver,
+			MongoClient: client,
 		}
 
 		srv := &http.Server{

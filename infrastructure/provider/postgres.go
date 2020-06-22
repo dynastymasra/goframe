@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	db      *gorm.DB
-	err     error
-	runOnce resync.Once
+	postgresDB  *gorm.DB
+	errPostgres error
+	runPostgres resync.Once
 )
 
 type Postgres struct {
@@ -27,19 +27,31 @@ type Postgres struct {
 func (p Postgres) Client() (*gorm.DB, error) {
 	url := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", p.Username, p.Password, p.Address, p.DatabaseName)
 
-	runOnce.Do(func() {
-		db, err = gorm.Open("postgres", url)
-		if err != nil {
-			logrus.WithField("url", url).WithError(err).Errorln("Failed connect to database")
+	runPostgres.Do(func() {
+		postgresDB, errPostgres = gorm.Open("postgres", url)
+		if errPostgres != nil {
+			logrus.WithField("url", url).WithError(errPostgres).Errorln("Failed connect to database")
 			return
 		}
 
-		db.DB().SetMaxIdleConns(p.MaxIdleConn)
-		db.DB().SetMaxOpenConns(p.MaxOpenConn)
-		db.LogMode(p.LogEnabled)
+		postgresDB.DB().SetMaxIdleConns(p.MaxIdleConn)
+		postgresDB.DB().SetMaxOpenConns(p.MaxOpenConn)
+		postgresDB.LogMode(p.LogEnabled)
 	})
 
-	return db, err
+	return postgresDB, errPostgres
+}
+
+func (p Postgres) Ping() error {
+	if postgresDB == nil {
+		return gorm.ErrUnaddressable
+	}
+
+	if err := postgresDB.DB().Ping(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 type Query struct {

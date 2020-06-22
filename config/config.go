@@ -61,11 +61,11 @@ func Load() {
 			LogLevel:    getInt(envNeo4JLogLevel),
 		},
 		mongodb: provider.MongoDB{
-			Format:   getString(envMongoFormat),
-			Address:  getString(envMongoAddress),
-			Username: getString(envMongoUsername),
-			Password: getString(envMongoPassword),
-			Database: getString(envMongoDatabase),
+			Address:     getString(envMongoAddress),
+			Username:    getString(envMongoUsername),
+			Password:    getString(envMongoPassword),
+			Database:    getString(envMongoDatabase),
+			MaxPoolSize: getInt(envMongoMaxPool),
 		},
 	}
 }
