@@ -42,18 +42,6 @@ func (p Postgres) Client() (*gorm.DB, error) {
 	return postgresDB, errPostgres
 }
 
-func (p Postgres) Ping() error {
-	if postgresDB == nil {
-		return gorm.ErrUnaddressable
-	}
-
-	if err := postgresDB.DB().Ping(); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 type Query struct {
 	Model     string
 	Limit     int

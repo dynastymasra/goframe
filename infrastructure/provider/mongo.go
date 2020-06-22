@@ -47,15 +47,3 @@ func (m MongoDB) Client() (*mongo.Client, error) {
 
 	return mongoClient, errMongo
 }
-
-func (m MongoDB) Ping() error {
-	if mongoClient == nil {
-		return mongo.ErrClientDisconnected
-	}
-
-	if err := mongoClient.Ping(context.Background(), nil); err != nil {
-		return err
-	}
-
-	return nil
-}
