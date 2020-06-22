@@ -1,6 +1,6 @@
 # Goframe
 
-Go skeleton (MongoDB, Neo4J, Postgres)
+Go skeleton (MongoDB, Neo4J, Postgres), Remove unused or unnecessary function or code
 
 ## Libraries
 
@@ -77,3 +77,4 @@ go tool cover -html=coverage.out
 + `MONGO_USERNAME` - MongoDB username
 + `MONGO_PASSWORD` - MongoDB password
 + `MONGO_MAX_POOL` - MongoDB max pool connection
+
