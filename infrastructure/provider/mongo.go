@@ -26,19 +26,16 @@ type MongoDB struct {
 
 func (m MongoDB) Client() (*mongo.Client, error) {
 	auth := options.Credential{
-		AuthSource:  m.Database,
-		Username:    m.Password,
-		Password:    m.Password,
-		PasswordSet: true,
+		AuthSource: m.Database,
+		Username:   m.Password,
+		Password:   m.Password,
 	}
 
 	runMongo.Do(func() {
-		mongoClient, errMongo = mongo.NewClient(options.Client().
+		mongoClient, errMongo = mongo.Connect(context.Background(), options.Client().
 			SetAuth(auth).
 			SetMaxPoolSize(uint64(m.MaxPoolSize)).
 			ApplyURI(m.Address))
-
-		errMongo = mongoClient.Connect(context.Background())
 	})
 
 	if err := mongoClient.Ping(context.Background(), nil); err != nil {
