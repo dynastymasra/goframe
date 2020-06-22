@@ -15,5 +15,5 @@ require (
 	github.com/spf13/viper v1.7.0
 	github.com/urfave/cli/v2 v2.2.0
 	github.com/urfave/negroni v1.0.1-0.20200608235619-7de0dfc1ff79
-	go.mongodb.org/mongo-driver v1.1.0
+	go.mongodb.org/mongo-driver v1.3.4
 )
