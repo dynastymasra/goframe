@@ -16,6 +16,12 @@ Before run this service. Make sure all requirements dependencies has been instal
 
 Use command go ```go run main.go``` in root folder for run this application.
 
+### Migration
+
+- ```go run main.go migrate:run``` Command used to run the migration files.
+- ```go run main.go migrate:rollback``` Command used to rollback the migration.
+- ```go run main.go migrate:create``` Command used to create a new migration file.
+
 ### Docker
 
 **goframe** uses docker multi stages build, minimal docker version is **17.05**. If docker already installed use command.
