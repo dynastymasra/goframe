@@ -51,7 +51,7 @@ For run unit test, from root project you can go to folder or package and execute
 go test -v -cover -coverprofile=coverage.out -covermode=set
 go tool cover -html=coverage.out
 ```
-`go tool` will generate GUI for test coverage. Available package or folder can be tested
+`go tool` will generate GUI for test coverage. Available package or folder can be tested.
 
 - `/infrastructure/web/handler`
 
@@ -59,7 +59,7 @@ go tool cover -html=coverage.out
 
 Environment variables for Development use **application-example.yaml**, Change the file name to **application.yaml**
 
-+ `SERVER_PORT` - Address application is used default is `8080`
++ `SERVER_PORT` - Port address used by service, default is `8080`
 + `LOGGER_LEVEL` - Log level(debug, info, error, warn, etc)
 + `LOGGER_CALLER_ENABLED` - Enabled log report caller.
 + `LOGGER_FORMAT` - Format specific for log.
