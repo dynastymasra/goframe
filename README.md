@@ -3,7 +3,7 @@
 [![Go](https://img.shields.io/badge/go-1.14-00E5E6.svg)](https://golang.org/)
 [![Postgres](https://img.shields.io/badge/postgres-12.3-326590.svg)](https://www.postgresql.org/)
 [![MongoDB](https://img.shields.io/badge/mongodb-4.2.8-139B50.svg)](https://www.mongodb.com/)
-[![Elasticsearch](https://img.shields.io/badge/elasticsearch-4.2.8-F4BE1A.svg)](https://www.elastic.co/elasticsearch/)
+[![Elasticsearch](https://img.shields.io/badge/elasticsearch-7.7.0-F4BE1A.svg)](https://www.elastic.co/elasticsearch/)
 [![Docker](https://img.shields.io/badge/docker-19.03-2885E4.svg)](https://www.docker.com/)
 
 Go skeleton (MongoDB, Neo4J, Postgres), Remove unused or unnecessary function or code
