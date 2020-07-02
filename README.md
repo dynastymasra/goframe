@@ -57,6 +57,8 @@ go tool cover -html=coverage.out
 
 ## Environment Variables
 
+Environment variables for Development use **application-example.yaml**, Change the file name to **application.yaml**
+
 + `SERVER_PORT` - Address application is used default is `8080`
 + `LOGGER_LEVEL` - Log level(debug, info, error, warn, etc)
 + `LOGGER_CALLER_ENABLED` - Enabled log report caller.
