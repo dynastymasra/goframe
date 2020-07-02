@@ -25,9 +25,9 @@ func CreateMigrationFiles(filename string) error {
 		return errors.New("migration filename is not provided")
 	}
 
-	timeStamp := time.Now().Unix()
-	upMigrationFilePath := fmt.Sprintf("%s/%d_%s.up.sql", migrationFilePath, timeStamp, filename)
-	downMigrationFilePath := fmt.Sprintf("%s/%d_%s.down.sql", migrationFilePath, timeStamp, filename)
+	timestamp := time.Now().Unix()
+	upMigrationFilePath := fmt.Sprintf("%s/%d_%s.up.sql", migrationFilePath, timestamp, filename)
+	downMigrationFilePath := fmt.Sprintf("%s/%d_%s.down.sql", migrationFilePath, timestamp, filename)
 
 	if err := createFile(upMigrationFilePath); err != nil {
 		return err
