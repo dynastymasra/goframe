@@ -58,10 +58,6 @@ func (r *RouterInstance) Router() *mux.Router {
 		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient, r.EsClient)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
-	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient, r.EsClient)),
-	)).Methods(http.MethodGet, http.MethodHead)
-
 	_ = router.PathPrefix("/v1/").Subrouter().UseEncodedPath()
 	commonHandlers.Use(middleware.LogrusLog(config.ServiceName, config.RequestID))
 
