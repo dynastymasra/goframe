@@ -26,7 +26,7 @@ func Load() {
 
 	viper.AutomaticEnv()
 
-	viper.SetConfigName("application")
+	viper.SetConfigName("config")
 	viper.AddConfigPath("./")
 	viper.AddConfigPath("./../")
 	viper.AddConfigPath("../../")

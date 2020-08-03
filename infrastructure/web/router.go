@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dynastymasra/goframe/app/controller"
 	"github.com/elastic/go-elasticsearch/v7"
 
 	"github.com/neo4j/neo4j-go-driver/neo4j"
@@ -13,7 +14,6 @@ import (
 
 	"github.com/dynastymasra/cookbook/negroni/middleware"
 
-	"github.com/dynastymasra/goframe/infrastructure/web/handler"
 	"github.com/urfave/negroni"
 
 	"github.com/dynastymasra/cookbook"
@@ -55,7 +55,7 @@ func (r *RouterInstance) Router() *mux.Router {
 
 	// Probes
 	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(handler.Ping(r.PostgresDB, r.MongoClient, r.EsClient)),
+		negroni.WrapFunc(controller.Ping(r.PostgresDB, r.MongoClient, r.EsClient)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	_ = router.PathPrefix("/v1/").Subrouter().UseEncodedPath()

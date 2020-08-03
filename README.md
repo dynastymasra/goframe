@@ -18,6 +18,27 @@ If use private repository dependency please make use GIT Private key created `ss
 
 Before run this service. Make sure all requirements dependencies has been installed likes **Golang, Docker, and database**
 
+### Structure
+
+This service tries to implement the clean architecture.
+
+```
+├── app (Interface Adapters) 
+│   ├── controller
+│   └── presenter
+│── config (Application config)
+│── console (Terminal console)
+│── domain (Enterprise Business Rules)
+│   ├── repository (Application Business Rules)
+│   └── service (Application Business Rules)
+│── infrastructure (Frameworks & Drivers)
+│   ├── provider (Drivers)
+│   └── web (Web Application)
+│── migration (Migration Files)
+│── test (Test Helper & Mocks)
+└── main.go (Main Application)
+```
+
 ### Local
 
 Use command go ```go run main.go``` in root folder for run this application.
@@ -53,11 +74,15 @@ go tool cover -html=coverage.out
 ```
 `go tool` will generate GUI for test coverage. Available package or folder can be tested.
 
-- `/infrastructure/web/handler`
+- `/app/controller`
+- `/app/presenter`
+- `/config`
+- `/domain`
+- `/infrastructure/provider`
 
 ## Environment Variables
 
-Environment variables for Development use **application-example.yaml**, Change the file name to **application.yaml**
+Environment variables for Development use **config-example.yaml**, Change the file name to **config.yaml**
 
 + `SERVER_PORT` - Port address used by service, default is `8080`
 + `LOGGER_LEVEL` - Log level(debug, info, error, warn, etc)
