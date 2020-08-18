@@ -111,7 +111,7 @@ Environment variables for Development use **config-example.yaml**, Change the fi
 + `POSTGRES_LOG_ENABLED` - Database log enabled, value `true` or `false`
 + `POSTGRES_MAX_OPEN_CONN` - Database max open connection
 + `POSTGRES_MAX_IDLE_CONN` - Database max idle connection
-+ `MONGO_ADDRESS` - MongoDB address with `mongodb://<host>:<port>` or `mongodb+srv://<host>:<port>`
++ `MONGO_ADDRESS` - MongoDB address with `mongodb://<host>:<port>`, `mongodb+srv://<host>:<port>`, and `"mongodb://<host>:<port>/?replicaSet=<replica>&connect=direct"` read the documentation for more information
 + `MONGO_DATABASE` - MongoDB database name
 + `MONGO_USERNAME` - MongoDB username
 + `MONGO_PASSWORD` - MongoDB password
