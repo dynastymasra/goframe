@@ -22,34 +22,34 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 		w.Header().Set("Content-Type", "application/json")
 
 		if err := db.DB().Ping(); err != nil {
-			logrus.WithError(err).Errorln("Failed ping database")
+			logrus.WithError(err).Errorln("Failed ping postgres database")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}
 
 		if err := client.Ping(r.Context(), nil); err != nil {
-			logrus.WithError(err).Errorln("Failed ping database")
+			logrus.WithError(err).Errorln("Failed ping mongo database")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}
 
 		res, err := esClient.Ping()
 		if err != nil {
-			logrus.WithError(err).Errorln("Failed ping database")
+			logrus.WithError(err).Errorln("Failed ping elasticsearch database")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}
 
 		if res.IsError() {
-			logrus.WithError(err).Errorln("Failed ping database")
+			logrus.WithError(err).Errorln("Failed ping elasticsearch is error")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(res.String(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}
