@@ -3,19 +3,21 @@ package config
 import (
 	"log"
 
-	"github.com/dynastymasra/goframe/infrastructure/provider"
-
 	"github.com/dynastymasra/cookbook"
+	"github.com/dynastymasra/cookbook/provider/elastic"
+	"github.com/dynastymasra/cookbook/provider/mongo"
+	"github.com/dynastymasra/cookbook/provider/neo4j"
+	"github.com/dynastymasra/cookbook/provider/postgres"
 	"github.com/spf13/viper"
 )
 
 type Config struct {
 	serverPort string
 	logger     LoggerConfig
-	postgres   provider.Postgres
-	neo4j      provider.Neo4J
-	mongodb    provider.MongoDB
-	elastic    provider.Elasticsearch
+	postgres   postgres.Config
+	neo4j      neo4j.Config
+	mongodb    mongo.Config
+	elastic    elastic.Config
 }
 
 var config *Config
@@ -43,32 +45,33 @@ func Load() {
 			level:  getString(envLoggerLevel),
 			caller: getBool(envLoggerCaller),
 		},
-		postgres: provider.Postgres{
-			DatabaseName: getString(envPostgresDatabase),
-			Address:      getString(envPostgresAddress),
-			Username:     getString(envPostgresUsername),
-			Password:     getString(envPostgresPassword),
-			MaxIdleConn:  getInt(envPostgresMaxIdleConn),
-			MaxOpenConn:  getInt(envPostgresMaxOpenConn),
-			LogEnabled:   getBool(envPostgresLogEnabled),
+		postgres: postgres.Config{
+			Database:    getString(envPostgresDatabase),
+			Host:        getString(envPostgresHost),
+			Port:        getInt(envPostgresPort),
+			Username:    getString(envPostgresUsername),
+			Password:    getString(envPostgresPassword),
+			Params:      getString(envPostgresParams),
+			MaxIdleConn: getInt(envPostgresMaxIdleConn),
+			MaxOpenConn: getInt(envPostgresMaxOpenConn),
+			LogMode:     getInt(envPostgresLogLevel),
 		},
-		neo4j: provider.Neo4J{
+		neo4j: neo4j.Config{
 			Address:     getString(envNeo4JAddress),
 			Username:    getString(envNeo4JUsername),
 			Password:    getString(envNeo4JPassword),
 			MaxConnPool: getInt(envNeo4JMaxConnPool),
-			Encrypted:   getBool(envNeo4JEncrypted),
 			LogEnabled:  getBool(envNeo4JLogEnabled),
 			LogLevel:    getInt(envNeo4JLogLevel),
 		},
-		mongodb: provider.MongoDB{
+		mongodb: mongo.Config{
 			Address:     getString(envMongoAddress),
 			Username:    getString(envMongoUsername),
 			Password:    getString(envMongoPassword),
 			Database:    getString(envMongoDatabase),
 			MaxPoolSize: getInt(envMongoMaxPool),
 		},
-		elastic: provider.Elasticsearch{
+		elastic: elastic.Config{
 			Address:        getString(envElasticsearchAddress),
 			Username:       getString(envElasticsearchUsername),
 			Password:       getString(envElasticsearchPassword),
@@ -86,19 +89,19 @@ func Logger() LoggerConfig {
 	return config.logger
 }
 
-func Postgres() provider.Postgres {
+func Postgres() postgres.Config {
 	return config.postgres
 }
 
-func Neo4J() provider.Neo4J {
+func Neo4J() neo4j.Config {
 	return config.neo4j
 }
 
-func MongoDB() provider.MongoDB {
+func MongoDB() mongo.Config {
 	return config.mongodb
 }
 
-func Elasticsearch() provider.Elasticsearch {
+func Elasticsearch() elastic.Config {
 	return config.elastic
 }
 

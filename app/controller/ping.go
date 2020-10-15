@@ -5,12 +5,11 @@ import (
 	"net/http"
 
 	"github.com/elastic/go-elasticsearch/v7"
+	"gorm.io/gorm"
 
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/dynastymasra/goframe/config"
-
-	"github.com/jinzhu/gorm"
 
 	"github.com/dynastymasra/cookbook"
 	"github.com/sirupsen/logrus"
@@ -21,10 +20,19 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
-		if err := db.DB().Ping(); err != nil {
+		dbClient, err := db.DB()
+		if err != nil {
+			logrus.WithError(err).Errorln("Failed get database")
+
+			w.WriteHeader(http.StatusServiceUnavailable)
+			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), r.Context().Value(config.RequestID)).Stringify())
+			return
+		}
+
+		if err := dbClient.Ping(); err != nil {
 			logrus.WithError(err).Errorln("Failed ping database")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}
@@ -32,7 +40,7 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 		if err := client.Ping(r.Context(), nil); err != nil {
 			logrus.WithError(err).Errorln("Failed ping database")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}
@@ -41,7 +49,7 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 		if err != nil {
 			logrus.WithError(err).Errorln("Failed ping database")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}
@@ -49,7 +57,7 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 		if res.IsError() {
 			logrus.WithError(err).Errorln("Failed ping database")
 
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(res.String(), r.Context().Value(config.RequestID)).Stringify())
 			return
 		}

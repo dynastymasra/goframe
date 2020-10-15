@@ -6,19 +6,19 @@ import (
 
 	"github.com/dynastymasra/goframe/app/controller"
 	"github.com/elastic/go-elasticsearch/v7"
+	"gorm.io/gorm"
 
-	"github.com/neo4j/neo4j-go-driver/neo4j"
+	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/dynastymasra/goframe/config"
 
 	"github.com/dynastymasra/cookbook/negroni/middleware"
 
-	"github.com/urfave/negroni"
+	"github.com/urfave/negroni/v2"
 
 	"github.com/dynastymasra/cookbook"
 	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
 )
 
 const DefaultResponseNotFound = "the requested resource doesn't exists"
@@ -38,7 +38,7 @@ func (r *RouterInstance) Router() *mux.Router {
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprint(w, cookbook.FailResponse(&cookbook.JSON{
 			"endpoint": DefaultResponseNotFound,
-		}, nil).Stringify())
+		}).Stringify())
 	})
 
 	router.MethodNotAllowedHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +46,7 @@ func (r *RouterInstance) Router() *mux.Router {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		fmt.Fprint(w, cookbook.FailResponse(&cookbook.JSON{
 			"method": DefaultResponseNotFound,
-		}, nil).Stringify())
+		}).Stringify())
 	})
 
 	commonHandlers := negroni.New(

@@ -13,7 +13,7 @@ import (
 
 	"github.com/dynastymasra/goframe/infrastructure/web"
 
-	"github.com/dynastymasra/goframe/console"
+	"github.com/dynastymasra/cookbook/provider/postgres"
 
 	"github.com/dynastymasra/goframe/config"
 	"github.com/sirupsen/logrus"
@@ -30,9 +30,9 @@ func main() {
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT, os.Interrupt)
 
 	log := logrus.WithFields(logrus.Fields{
-		"serviceName": config.ServiceName,
-		"version":     config.Version,
-		"port":        config.ServerPort(),
+		"service": config.ServiceName,
+		"version": config.Version,
+		"web":     config.ServerPort(),
 	})
 
 	log.Infoln("Prepare start service")
@@ -61,11 +61,6 @@ func main() {
 		log.WithError(err).Fatalln("Failed connect to Elasticsearch")
 	}
 
-	migration, err := console.Migration(db)
-	if err != nil {
-		log.WithError(err).Fatalln("Failed run migration")
-	}
-
 	clientApp := cli.NewApp()
 	clientApp.Name = config.ServiceName
 	clientApp.Version = config.Version
@@ -82,7 +77,7 @@ func main() {
 			Addr: fmt.Sprintf(":%s", config.ServerPort()),
 			Handler: handlers.RecoveryHandler(
 				handlers.PrintRecoveryStack(true),
-				handlers.RecoveryLogger(logrus.StandardLogger()),
+				handlers.RecoveryLogger(log),
 			)(router.Router()),
 		}
 
@@ -117,7 +112,12 @@ func main() {
 			Action: func(c *cli.Context) error {
 				logrus.Infoln("Start database migration")
 
-				if err := console.RunMigration(migration); err != nil {
+				migration, err := postgres.Migration(db)
+				if err != nil {
+					log.WithError(err).Fatalln("Failed run migration")
+				}
+
+				if err := postgres.RunMigration(migration); err != nil {
 					logrus.WithError(err).Fatalln("Failed run database migration")
 				}
 
@@ -131,7 +131,12 @@ func main() {
 			Action: func(c *cli.Context) error {
 				logrus.Infoln("Rollback database migration to previous version")
 
-				if err := console.RollbackMigration(migration); err != nil {
+				migration, err := postgres.Migration(db)
+				if err != nil {
+					log.WithError(err).Fatalln("Failed run migration")
+				}
+
+				if err := postgres.RollbackMigration(migration); err != nil {
 					logrus.WithError(err).Fatalln("Failed rollback database migration")
 				}
 
@@ -143,7 +148,7 @@ func main() {
 			Name:        "migrate:create",
 			Description: "Create up and down migration files with timestamp",
 			Action: func(c *cli.Context) error {
-				return console.CreateMigrationFiles(c.Args().Get(0))
+				return postgres.CreateMigrationFiles(c.Args().Get(0))
 			},
 		},
 	}
