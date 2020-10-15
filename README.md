@@ -116,7 +116,7 @@ Environment variables for Development use **config-example.yaml**, Change the fi
     - `2` - Error
     - `3` - Warn
     - `4` - Info
-+ `MONGO_ADDRESS` - MongoDB address with `mongodb://<host>:<port>` or `mongodb+srv://<host>:<port>`
++ `MONGO_ADDRESS` - MongoDB address with `mongodb://<host>:<port>`, `mongodb+srv://<host>:<port>`, and `"mongodb://<host>:<port>/?replicaSet=<replica>&connect=direct"` read the documentation for more information
 + `MONGO_DATABASE` - MongoDB database name
 + `MONGO_USERNAME` - MongoDB username
 + `MONGO_PASSWORD` - MongoDB password
