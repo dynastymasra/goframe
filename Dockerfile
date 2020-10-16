@@ -1,4 +1,4 @@
-FROM alpine:3.11 AS seabolt
+FROM alpine:3.12 AS seabolt
 
 # install dependecies
 RUN set -ex \
@@ -12,7 +12,7 @@ RUN cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_LIBDIR=lib .. && cmake --
 
 ############################## SEPARATOR ##############################
 
-FROM golang:1.14-alpine AS builder
+FROM golang:1.15-alpine AS builder
 
 ARG GIT_PRIVATE_KEY
 ARG GOPRIVATE
@@ -37,7 +37,7 @@ RUN GOOS=linux go build -tags=main -o goframe
 
 ############################## SEPARATOR ##############################
 
-FROM alpine:3.11
+FROM alpine:3.12
 
 RUN set -ex \
     && apk add --update bash ca-certificates tzdata \
@@ -49,7 +49,6 @@ RUN tar zxf /tmp/seabolt*.tar.gz --strip-components=1 -C /
 
 # app
 WORKDIR /app
-RUN mkdir migration
 COPY --from=builder /go/src/github.com/dynastymasra/goframe/goframe /app/
 
 # remove seabolt package
