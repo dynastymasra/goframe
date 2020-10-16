@@ -30,9 +30,9 @@ func main() {
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT, os.Interrupt)
 
 	log := logrus.WithFields(logrus.Fields{
-		"service": config.ServiceName,
-		"version": config.Version,
-		"web":     config.ServerPort(),
+		config.JServiceName: config.ServiceName,
+		config.JVersion:     config.Version,
+		"web":               config.ServerPort(),
 	})
 
 	log.Infoln("Prepare start service")
