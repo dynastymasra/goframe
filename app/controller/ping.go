@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
+
 	"github.com/dynastymasra/goframe/config"
 
 	"github.com/elastic/go-elasticsearch/v7"
@@ -16,7 +18,7 @@ import (
 )
 
 // Remove unused params
-func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) http.HandlerFunc {
+func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client, neo4jDriver neo4j.Driver) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set(cookbook.HContentType, cookbook.HJSONTypeUTF8)
 		w.Header().Set(cookbook.XRequestID, fmt.Sprintf("%v", r.Context().Value(config.RequestID)))
@@ -27,9 +29,17 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 			config.JVersion:     config.Version,
 		})
 
+		if err := neo4jDriver.VerifyConnectivity(); err != nil {
+			log.WithError(err).Errorln("Failed connect to Neo4J database")
+
+			w.WriteHeader(http.StatusServiceUnavailable)
+			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), cookbook.ErrDatabaseUnavailableCode).Stringify())
+			return
+		}
+
 		dbClient, err := db.DB()
 		if err != nil {
-			log.WithError(err).Errorln("Failed get database")
+			log.WithError(err).Errorln("Failed get Postgres database")
 
 			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), cookbook.ErrDatabaseUnavailableCode).Stringify())
@@ -37,7 +47,7 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 		}
 
 		if err := dbClient.Ping(); err != nil {
-			log.WithError(err).Errorln("Failed ping database")
+			log.WithError(err).Errorln("Failed connect to Postgres database")
 
 			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), cookbook.ErrDatabaseUnavailableCode).Stringify())
@@ -45,7 +55,7 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 		}
 
 		if err := client.Ping(r.Context(), nil); err != nil {
-			log.WithError(err).Errorln("Failed ping mongo database")
+			log.WithError(err).Errorln("Failed connect to Postgres database")
 
 			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), cookbook.ErrDatabaseUnavailableCode).Stringify())
@@ -54,7 +64,7 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 
 		res, err := esClient.Ping()
 		if err != nil {
-			log.WithError(err).Errorln("Failed ping elasticsearch database")
+			log.WithError(err).Errorln("Failed connect to elasticsearch database")
 
 			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(err.Error(), cookbook.ErrDatabaseUnavailableCode).Stringify())
@@ -62,7 +72,7 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client) htt
 		}
 
 		if res.IsError() {
-			log.WithError(err).Errorln("Failed ping elasticsearch is error")
+			log.WithError(err).Errorln("Elasticsearch database connection has an error")
 
 			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(res.String(), cookbook.ErrDatabaseUnavailableCode).Stringify())

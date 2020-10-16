@@ -21,8 +21,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-const DefaultResponseNotFound = "the requested resource doesn't exists"
-
 type RouterInstance struct {
 	PostgresDB  *gorm.DB
 	Neo4JDriver neo4j.Driver
@@ -34,19 +32,23 @@ func (r *RouterInstance) Router() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true).UseEncodedPath()
 
 	router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set(cookbook.HContentType, cookbook.HJSONTypeUTF8)
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, cookbook.FailResponse(&cookbook.JSON{
-			"endpoint": DefaultResponseNotFound,
-		}).Stringify())
+		fmt.Fprint(w, cookbook.FailResponse([]cookbook.JSON{{
+			"title":   cookbook.ErrEndpointNotFound.Title,
+			"code":    cookbook.ErrEndpointNotFound.Code,
+			"message": cookbook.ErrEndpointNotFound.Error.Error(),
+		}}).Stringify())
 	})
 
 	router.MethodNotAllowedHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set(cookbook.HContentType, cookbook.HJSONTypeUTF8)
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Fprint(w, cookbook.FailResponse(&cookbook.JSON{
-			"method": DefaultResponseNotFound,
-		}).Stringify())
+		fmt.Fprint(w, cookbook.FailResponse([]cookbook.JSON{{
+			"title":   cookbook.ErrMethodNotAllowed.Title,
+			"code":    cookbook.ErrMethodNotAllowed.Code,
+			"message": cookbook.ErrMethodNotAllowed.Error.Error(),
+		}}).Stringify())
 	})
 
 	commonHandlers := negroni.New(
@@ -55,7 +57,7 @@ func (r *RouterInstance) Router() *mux.Router {
 
 	// Probes
 	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(controller.Ping(r.PostgresDB, r.MongoClient, r.EsClient)),
+		negroni.WrapFunc(controller.Ping(r.PostgresDB, r.MongoClient, r.EsClient, r.Neo4JDriver)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	_ = router.PathPrefix("/v1/").Subrouter().UseEncodedPath()
