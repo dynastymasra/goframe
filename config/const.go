@@ -1,9 +1,11 @@
 package config
 
 const (
-	ServiceName = "Goframe"
-	Version     = "0.1.0"
-	RequestID   = "requestId"
+	ServiceName  = "Goframe"
+	Version      = "0.1.0"
+	RequestID    = "requestId"
+	JServiceName = "service"
+	JVersion     = "version"
 
 	// Service port address
 	envServerPort = "SERVER_PORT"
