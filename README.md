@@ -5,6 +5,7 @@
 [![MongoDB](https://img.shields.io/badge/mongodb-4.2.8-139B50.svg)](https://www.mongodb.com/)
 [![Neo4J](https://img.shields.io/badge/neo4j-4.1.3-3A8B9F.svg)](https://neo4j.com/)
 [![Elasticsearch](https://img.shields.io/badge/elasticsearch-7.7.0-F4BE1A.svg)](https://www.elastic.co/elasticsearch/)
+[![Seabolt](https://img.shields.io/badge/seabolt-1.7.4-2885E4.svg)](https://github.com/neo4j-drivers/seabolt)
 [![Docker](https://img.shields.io/badge/docker-19.03-2885E4.svg)](https://www.docker.com/)
 
 Go skeleton (MongoDB, Neo4J, Postgres), Remove unused or unnecessary function or code
