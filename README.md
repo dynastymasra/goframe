@@ -3,6 +3,7 @@
 [![Go](https://img.shields.io/badge/go-1.14-00E5E6.svg)](https://golang.org/)
 [![Postgres](https://img.shields.io/badge/postgres-12.3-326590.svg)](https://www.postgresql.org/)
 [![MongoDB](https://img.shields.io/badge/mongodb-4.2.8-139B50.svg)](https://www.mongodb.com/)
+[![Neo4J](https://img.shields.io/badge/neo4j-4.1.3-3A8B9F.svg)](https://neo4j.com/)
 [![Elasticsearch](https://img.shields.io/badge/elasticsearch-7.7.0-F4BE1A.svg)](https://www.elastic.co/elasticsearch/)
 [![Docker](https://img.shields.io/badge/docker-19.03-2885E4.svg)](https://www.docker.com/)
 
@@ -97,7 +98,7 @@ Environment variables for Development use **config-example.yaml**, Change the fi
 + `NEO4J_PASSWORD` - Neo4J database password
 + `NEO4J_MAX_CONN_POOL` - Neo4j maximum number of connections per URL to allow on this driver
 + `NEO4J_LOG_ENABLED` - Neo4J database log enabled (`true`/`false`)
-+ `NEO4J_LOG_LEVEL` Neo4J type that default logging implementations use for available default `0`
++ `NEO4J_LOG_LEVEL` Neo4J type that default logging implementations
   - `1` - Level error
   - `2` - Level warning
   - `3` - Level info
