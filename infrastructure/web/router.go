@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dynastymasra/cookbook/message"
+
 	"github.com/dynastymasra/goframe/app/controller"
 	"github.com/elastic/go-elasticsearch/v7"
 	"gorm.io/gorm"
@@ -33,21 +35,27 @@ func (r *RouterInstance) Router() *mux.Router {
 
 	router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set(cookbook.HContentType, cookbook.HJSONTypeUTF8)
+		w.Header().Set(cookbook.HAccept, cookbook.HJSONTypeUTF8)
 		w.WriteHeader(http.StatusNotFound)
+
+		res := message.ErrEndpointNotFoundCode.ErrorMessage()
 		fmt.Fprint(w, cookbook.FailResponse([]cookbook.JSON{{
-			"title":   cookbook.ErrEndpointNotFound.Title,
-			"code":    cookbook.ErrEndpointNotFound.Code,
-			"message": cookbook.ErrEndpointNotFound.Error.Error(),
+			"title":   res.Title,
+			"code":    res.Code,
+			"message": res.Error.Error(),
 		}}).Stringify())
 	})
 
 	router.MethodNotAllowedHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set(cookbook.HContentType, cookbook.HJSONTypeUTF8)
+		w.Header().Set(cookbook.HAccept, cookbook.HJSONTypeUTF8)
 		w.WriteHeader(http.StatusMethodNotAllowed)
+
+		res := message.ErrMethodNotAllowedCode.ErrorMessage()
 		fmt.Fprint(w, cookbook.FailResponse([]cookbook.JSON{{
-			"title":   cookbook.ErrMethodNotAllowed.Title,
-			"code":    cookbook.ErrMethodNotAllowed.Code,
-			"message": cookbook.ErrMethodNotAllowed.Error.Error(),
+			"title":   res.Title,
+			"code":    res.Code,
+			"message": res.Error.Error(),
 		}}).Stringify())
 	})
 
