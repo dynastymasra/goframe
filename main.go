@@ -61,6 +61,7 @@ func main() {
 		log.WithError(err).Fatalln("Failed connect to Elasticsearch")
 	}
 
+	// Remove this database if not used
 	redisClient, err := config.Redis().Client()
 	if err != nil {
 		log.WithError(err).Fatalln("Failed connect to Redis")
