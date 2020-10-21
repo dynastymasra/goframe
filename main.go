@@ -61,6 +61,11 @@ func main() {
 		log.WithError(err).Fatalln("Failed connect to Elasticsearch")
 	}
 
+	redisClient, err := config.Redis().Client()
+	if err != nil {
+		log.WithError(err).Fatalln("Failed connect to Redis")
+	}
+
 	clientApp := cli.NewApp()
 	clientApp.Name = config.ServiceName
 	clientApp.Version = config.Version
@@ -71,6 +76,7 @@ func main() {
 			Neo4JDriver: driver,
 			MongoClient: client,
 			EsClient:    esClient,
+			RedisClient: redisClient,
 		}
 
 		srv := &http.Server{

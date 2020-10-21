@@ -47,4 +47,11 @@ const (
 	envElasticsearchPassword       = "ELASTICSEARCH_PASSWORD"
 	envElasticsearchMaxConnPerHost = "ELASTICSEARCH_MAX_CONN_PER_HOST"
 	envElasticsearchMaxIdlePerHost = "ELASTICSEARCH_MAX_IDLE_PER_HOST"
+
+	// Redis config
+	envRedisAddress     = "REDIS_ADDRESS"
+	envRedisPassword    = "REDIS_PASSWORD"
+	envRedisDatabase    = "REDIS_DATABASE"
+	envRedisPoolSize    = "REDIS_POOL_SIZE"
+	envRedisMinIdleConn = "REDIS_MIN_IDLE_CONN"
 )

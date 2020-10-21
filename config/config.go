@@ -3,6 +3,8 @@ package config
 import (
 	"log"
 
+	"github.com/dynastymasra/cookbook/provider/redis"
+
 	"github.com/dynastymasra/cookbook"
 	"github.com/dynastymasra/cookbook/provider/elastic"
 	"github.com/dynastymasra/cookbook/provider/mongo"
@@ -18,6 +20,7 @@ type Config struct {
 	neo4j      neo4j.Config
 	mongodb    mongo.Config
 	elastic    elastic.Config
+	redis      redis.Config
 }
 
 var config *Config
@@ -78,6 +81,13 @@ func Load() {
 			MaxConnPerHost: getInt(envElasticsearchMaxConnPerHost),
 			MaxIdlePerHost: getInt(envElasticsearchMaxIdlePerHost),
 		},
+		redis: redis.Config{
+			Address:     getString(envRedisAddress),
+			Password:    getString(envRedisPassword),
+			Database:    getInt(envRedisDatabase),
+			PoolSize:    getInt(envRedisPoolSize),
+			MinIdleConn: getInt(envRedisMinIdleConn),
+		},
 	}
 }
 
@@ -103,6 +113,10 @@ func MongoDB() mongo.Config {
 
 func Elasticsearch() elastic.Config {
 	return config.elastic
+}
+
+func Redis() redis.Config {
+	return config.redis
 }
 
 func getString(key string) string {

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/go-redis/redis/v8"
+
 	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
 
 	"github.com/dynastymasra/goframe/config"
@@ -19,7 +21,7 @@ import (
 )
 
 // Remove unused params
-func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client, neo4jDriver neo4j.Driver) http.HandlerFunc {
+func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client, neo4jDriver neo4j.Driver, redisClient *redis.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set(cookbook.HContentType, cookbook.HJSONTypeUTF8)
 		w.Header().Set(cookbook.XRequestID, fmt.Sprintf("%v", r.Context().Value(config.RequestID)))
@@ -74,6 +76,14 @@ func Ping(db *gorm.DB, client *mongo.Client, esClient *elasticsearch.Client, neo
 
 		if res.IsError() {
 			log.WithError(err).Errorln("Elasticsearch database connection has an error")
+
+			w.WriteHeader(http.StatusServiceUnavailable)
+			fmt.Fprint(w, cookbook.ErrorResponse(res.String(), message.ErrDatabaseUnavailableCode).Stringify())
+			return
+		}
+
+		if err := redisClient.Ping(r.Context()).Err(); err != nil {
+			log.WithError(err).Errorln("Failed connect to redis database")
 
 			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprint(w, cookbook.ErrorResponse(res.String(), message.ErrDatabaseUnavailableCode).Stringify())

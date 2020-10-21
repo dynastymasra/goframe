@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/go-redis/redis/v8"
+
 	"github.com/dynastymasra/cookbook/message"
 
 	"github.com/dynastymasra/goframe/app/controller"
@@ -28,6 +30,7 @@ type RouterInstance struct {
 	Neo4JDriver neo4j.Driver
 	MongoClient *mongo.Client
 	EsClient    *elasticsearch.Client
+	RedisClient *redis.Client
 }
 
 func (r *RouterInstance) Router() *mux.Router {
@@ -65,7 +68,7 @@ func (r *RouterInstance) Router() *mux.Router {
 
 	// Probes
 	router.Handle("/ping", commonHandlers.With(
-		negroni.WrapFunc(controller.Ping(r.PostgresDB, r.MongoClient, r.EsClient, r.Neo4JDriver)),
+		negroni.WrapFunc(controller.Ping(r.PostgresDB, r.MongoClient, r.EsClient, r.Neo4JDriver, r.RedisClient)),
 	)).Methods(http.MethodGet, http.MethodHead)
 
 	_ = router.PathPrefix("/v1/").Subrouter().UseEncodedPath()
