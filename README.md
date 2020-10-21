@@ -5,6 +5,7 @@
 [![MongoDB](https://img.shields.io/badge/mongodb-4.2.8-139B50.svg)](https://www.mongodb.com/)
 [![Neo4J](https://img.shields.io/badge/neo4j-4.1.3-3A8B9F.svg)](https://neo4j.com/)
 [![Elasticsearch](https://img.shields.io/badge/elasticsearch-7.7.0-F4BE1A.svg)](https://www.elastic.co/elasticsearch/)
+[![Redis](https://img.shields.io/badge/redis-6.0.8-C93D2E.svg)](https://redis.io/)
 [![Seabolt](https://img.shields.io/badge/seabolt-1.7.4-2885E4.svg)](https://github.com/neo4j-drivers/seabolt)
 [![Docker](https://img.shields.io/badge/docker-19.03-2885E4.svg)](https://www.docker.com/)
 
@@ -128,3 +129,8 @@ Environment variables for Development use **config-example.yaml**, Change the fi
 + `ELASTICSEARCH_PASSWORD` - Elasticsearch password
 + `ELASTICSEARCH_MAX_CONN_PER_HOST` - Elasticsearch max connection per hosts
 + `ELASTICSEARCH_MAX_IDLE_PER_HOST` - Elasticsearch max idle connection per hosts
++ `REDIS_ADDRESS` - Redis address `localhost:6379`
++ `REDIS_PASSWORD` - Redis password
++ `REDIS_DATABASE` - Redis database
++ `REDIS_POOL_SIZE` - Redis pool size
++ `REDIS_MIN_IDLE_CONN` - Redis min idle connection
