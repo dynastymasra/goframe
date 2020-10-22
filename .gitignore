@@ -103,5 +103,7 @@ fabric.properties
 
 application.yml
 application.yaml
+config.yml
+config.yaml
 
 .realize.yaml
