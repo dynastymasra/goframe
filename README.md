@@ -81,7 +81,6 @@ go tool cover -html=coverage.out
 - `/app/presenter`
 - `/config`
 - `/domain`
-- `/infrastructure/provider`
 
 ## Environment Variables
 
