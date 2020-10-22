@@ -98,6 +98,7 @@ Environment variables for Development use **config-example.yaml**, Change the fi
 + `NEO4J_USERNAME` - Neo4J database username
 + `NEO4J_PASSWORD` - Neo4J database password
 + `NEO4J_MAX_CONN_POOL` - Neo4j maximum number of connections per URL to allow on this driver
++ `NEO4J_MAX_CONN_LIFETIME` - Maximum connection life time on pooled connections. Values less than or equal to 0 disables the lifetime check (in Minutes)
 + `NEO4J_LOG_ENABLED` - Neo4J database log enabled (`true`/`false`)
 + `NEO4J_LOG_LEVEL` Neo4J type that default logging implementations
   - `1` - Level error

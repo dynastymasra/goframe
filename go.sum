@@ -110,8 +110,8 @@ github.com/docker/go-connections v0.4.0/go.mod h1:Gbd7IOopHjR8Iph03tsViu4nIes5Xh
 github.com/docker/go-units v0.3.3/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
 github.com/docker/go-units v0.4.0 h1:3uh0PgVws3nIA0Q+MwDC8yjEPf9zjRfZZWXZYDct3Tw=
 github.com/docker/go-units v0.4.0/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
-github.com/dynastymasra/cookbook v1.10.1-0.20201022064604-040d064ed5da h1:UewnNm06Z5KKK78J+KAEUy43Hqm6Yo61LgN8VrAOZvA=
-github.com/dynastymasra/cookbook v1.10.1-0.20201022064604-040d064ed5da/go.mod h1:QmbmpK/k5aeQrQtjfgXXIYESs5ss/YoX/mFv6DSuXGU=
+github.com/dynastymasra/cookbook v1.10.1-0.20201022083217-241795267905 h1:3u9GoRcHh/s+HUESlhEZCuxOTqEZAefmShAjS3X9a8U=
+github.com/dynastymasra/cookbook v1.10.1-0.20201022083217-241795267905/go.mod h1:QmbmpK/k5aeQrQtjfgXXIYESs5ss/YoX/mFv6DSuXGU=
 github.com/edsrzf/mmap-go v0.0.0-20170320065105-0bce6a688712/go.mod h1:YO35OhQPt3KJa3ryjFM5Bs14WD66h8eGKpfaBNrHW5M=
 github.com/elastic/go-elasticsearch/v7 v7.9.0 h1:UEau+a1MiiE/F+UrDj60kqIHFWdzU1M2y/YtBU2NC2M=
 github.com/elastic/go-elasticsearch/v7 v7.9.0/go.mod h1:OJ4wdbtDNk5g503kvlHLyErCgQwwzmDtaFC4XyOxXA4=
