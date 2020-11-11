@@ -78,7 +78,7 @@ func (p *PingSuite) Test_PingHandler_Success() {
 	assert.Equal(p.T(), http.StatusOK, w.Code)
 }
 
-func (p *PingSuite) Test_PingHandler_Neo4J_Failed() {
+func (p *PingSuite) Test_PingHandler_Failed() {
 	w := httptest.NewRecorder()
 	r := httptest.NewRequest(http.MethodGet, "/ping", nil)
 	ctx := context.WithValue(r.Context(), config.RequestID, uuid.NewV4().String())

@@ -9,6 +9,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/dynastymasra/cookbook/provider"
+
 	"github.com/gorilla/handlers"
 
 	"github.com/dynastymasra/goframe/infrastructure/web"
@@ -124,7 +126,7 @@ func main() {
 					log.WithError(err).Fatalln("Failed run migration")
 				}
 
-				if err := postgres.RunMigration(migration); err != nil {
+				if err := provider.RunMigration(migration); err != nil {
 					logrus.WithError(err).Fatalln("Failed run database migration")
 				}
 
@@ -143,7 +145,7 @@ func main() {
 					log.WithError(err).Fatalln("Failed run migration")
 				}
 
-				if err := postgres.RollbackMigration(migration); err != nil {
+				if err := provider.RollbackMigration(migration); err != nil {
 					logrus.WithError(err).Fatalln("Failed rollback database migration")
 				}
 

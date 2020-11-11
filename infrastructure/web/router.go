@@ -12,7 +12,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"gorm.io/gorm"
 
-	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
+	"github.com/neo4j/neo4j-go-driver/neo4j"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/dynastymasra/goframe/config"

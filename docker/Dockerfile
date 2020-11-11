@@ -27,12 +27,11 @@ COPY --from=seabolt /seabolt/build/dist-package/seabolt*.tar.gz /tmp
 RUN tar zxf /tmp/seabolt*.tar.gz --strip-components=1 -C /
 
 WORKDIR /go/src/github.com/dynastymasra/goframe
-COPY go.mod go.sum git-creds.sh ./
+COPY . go.mod go.sum git-creds.sh ./
 RUN ./git-creds.sh gitlab.com
 RUN go mod download
 
 ## build linux app source code
-COPY . ./
 RUN GOOS=linux go build -tags=main -o goframe
 
 ############################## SEPARATOR ##############################

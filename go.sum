@@ -427,8 +427,6 @@ github.com/neo4j/neo4j-go-driver v1.8.1-0.20200803113522-b626aa943eba h1:fhFP5Rl
 github.com/neo4j/neo4j-go-driver v1.8.1-0.20200803113522-b626aa943eba/go.mod h1:ncO5VaFWh0Nrt+4KT4mOZboaczBZcLuHrG+/sUeP8gI=
 github.com/neo4j/neo4j-go-driver v1.8.3 h1:yfuo9YBAlezdIiogu92GwEir/81RD81dNwS5mY/wAIk=
 github.com/neo4j/neo4j-go-driver v1.8.3/go.mod h1:ncO5VaFWh0Nrt+4KT4mOZboaczBZcLuHrG+/sUeP8gI=
-github.com/neo4j/neo4j-go-driver/v4 v4.0.0-alpha1 h1:qKD91EPuACT5QKuk30YpDL9KxFuAqrutS59MkKWuIXs=
-github.com/neo4j/neo4j-go-driver/v4 v4.0.0-alpha1/go.mod h1:4e45lVy4oHcgLEQQrGHcc4MbyCeEPIQ33DhXqxf9AT4=
 github.com/newrelic/go-agent v3.9.0+incompatible h1:W2Zummx9jNATZVX6QVjYksX1TwxJGf4E6x1Wf3CG/jY=
 github.com/newrelic/go-agent v3.9.0+incompatible/go.mod h1:a8Fv1b/fYhFSReoTU6HDkTYIMZeSVNffmoS726Y0LzQ=
 github.com/nxadm/tail v1.4.4 h1:DQuhQpB1tVlglWS2hLQ5OV6B5r8aGxSrPc5Qo6uTN78=

@@ -70,6 +70,8 @@ docker run --name goframe -d -e ADDRESS=:8080 -e <environment> $(IMAGE):$(VERSIO
 
 ## Test
 
+### Local
+
 For run unit test, from root project you can go to folder or package and execute command
 ```bash
 go test -v -cover -coverprofile=coverage.out -covermode=set
@@ -81,6 +83,15 @@ go tool cover -html=coverage.out
 - `/app/presenter`
 - `/config`
 - `/domain`
+
+### Docker
+
+Run docker-compose to run test
+```
+docker-compose -p "$(PROJECT_NAME)" -f docker/docker-compose.yaml build app
+docker-compose -p "$(PROJECT_NAME)" -f docker/docker-compose.yaml run --rm app test
+docker-compose -p "$(PROJECT_NAME)" -f docker/docker-compose.yaml down
+```
 
 ## Environment Variables
 
