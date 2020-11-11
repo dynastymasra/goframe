@@ -8,9 +8,12 @@ require (
 	github.com/go-redis/redis/v8 v8.3.2
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.8.0
+	github.com/neo4j/neo4j-go-driver v1.8.3
 	github.com/neo4j/neo4j-go-driver/v4 v4.0.0-alpha1
+	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.7.0
 	github.com/spf13/viper v1.7.1
+	github.com/stretchr/testify v1.6.1
 	github.com/urfave/cli/v2 v2.2.0
 	github.com/urfave/negroni/v2 v2.0.2
 	go.mongodb.org/mongo-driver v1.4.2
