@@ -46,41 +46,35 @@ func main() {
 	}
 
 	// Remove this database if not used
-	driver, err := config.Neo4J().Driver()
-	if err != nil {
-		log.WithError(err).Fatalln("Failed connect to Neo4J")
-	}
+	//driver, err := config.Neo4J().Driver()
+	//if err != nil {
+	//	log.WithError(err).Fatalln("Failed connect to Neo4J")
+	//}
 
 	// Remove this database if not used
-	client, err := config.MongoDB().Client()
-	if err != nil {
-		log.WithError(err).Fatalln("Failed connect to MongoDB")
-	}
+	//client, err := config.MongoDB().Client()
+	//if err != nil {
+	//	log.WithError(err).Fatalln("Failed connect to MongoDB")
+	//}
 
 	// Remove this database if not used
-	esClient, err := config.Elasticsearch().Client()
-	if err != nil {
-		log.WithError(err).Fatalln("Failed connect to Elasticsearch")
-	}
+	//esClient, err := config.Elasticsearch().Client()
+	//if err != nil {
+	//	log.WithError(err).Fatalln("Failed connect to Elasticsearch")
+	//}
 
 	// Remove this database if not used
-	redisClient, err := config.Redis().Client()
-	if err != nil {
-		log.WithError(err).Fatalln("Failed connect to Redis")
-	}
+	//redisClient, err := config.Redis().Client()
+	//if err != nil {
+	//	log.WithError(err).Fatalln("Failed connect to Redis")
+	//}
 
 	clientApp := cli.NewApp()
 	clientApp.Name = config.ServiceName
 	clientApp.Version = config.Version
 
 	clientApp.Action = func(c *cli.Context) error {
-		router := &web.RouterInstance{
-			PostgresDB:  db,
-			Neo4JDriver: driver,
-			MongoClient: client,
-			EsClient:    esClient,
-			RedisClient: redisClient,
-		}
+		router := &web.RouterInstance{}
 
 		srv := &http.Server{
 			Addr: fmt.Sprintf(":%s", config.ServerPort()),
