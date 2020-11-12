@@ -116,13 +116,11 @@ Environment variables for Development use **config-example.yaml**, Change the fi
   - `2` - Level warning
   - `3` - Level info
   - `4` - Level debug
-+ `POSTGRES_HOST` - Database hostname
-+ `POSTGRES_PORT` - Database port
++ `POSTGRES_ADDRESS` - Database hostname
 + `POSTGRES_DATABASE` - Database name
 + `POSTGRES_USERNAME` - Database username
 + `POSTGRES_PASSWORD` - Database Password
 + `POSTGRES_PARAMS` - Database params, use space if more than one param (sslmode=disable)
-+ `POSTGRES_LOG_ENABLED` - Database log enabled, value `true` or `false`
 + `POSTGRES_MAX_OPEN_CONN` - Database max open connection
 + `POSTGRES_MAX_IDLE_CONN` - Database max idle connection
 + `POSTGRES_LOG_LEVEL` - Database log level, default is 2

@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  test:
+  frame:
     driver: bridge
 
 services:
@@ -14,11 +14,12 @@ services:
       LOGGER_LEVEL: 'debug'
       POSTGRES_DATABASE: 'goframe'
       POSTGRES_ADDRESS: 'localhost:5432'
+      POSTGRES_PARAMS: 'sslmode=disable'
       POSTGRES_USERNAME: 'postgres'
       POSTGRES_PASSWORD: 'root'
-      POSTGRES_LOG_ENABLED: 'true'
       POSTGRES_MAX_IDLE_CONN: '10'
       POSTGRES_MAX_OPEN_CONN: '10'
+      POSTGRES_LOG_LEVEL: '2'
       MONGO_ADDRESS: 'mongodb://localhost:27017'
       MONGO_DATABASE: 'goframe'
       MONGO_USERNAME: 'root'
@@ -43,7 +44,7 @@ services:
       REDIS_POOL_SIZE: '10'
       REDIS_MIN_IDLE_CONN: '10'
     networks:
-      - test
+      - frame
 
   postgres:
     image: postgres:13-alpine
@@ -54,7 +55,7 @@ services:
     expose:
       - 5432
     networks:
-      - test
+      - frame
 
   mongo:
     image: mongo:4
@@ -64,7 +65,7 @@ services:
     expose:
       - 27017
     networks:
-      - test
+      - frame
 
   neo4j:
     image: neo4j:4.1-enterprise
@@ -78,19 +79,19 @@ services:
     expose:
       - 7687
     networks:
-      - test
+      - frame
 
   elasticsearch:
     image: elasticsearch:7.9.3
     environment:
       ELASTIC_USERNAME: 'root'
       ELASTIC_PASSWORD: 'root'
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      ES_JAVA_OPTS: '-Xms512m -Xmx512m'
       discovery.type: 'single-node'
     expose:
       - 9200
     networks:
-      - test
+      - frame
 
   redis:
     image: redis:6-alpine
@@ -99,4 +100,4 @@ services:
     expose:
       - 6379
     networks:
-      - test
+      - frame
