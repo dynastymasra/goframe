@@ -61,7 +61,6 @@ func (p *PingSuite) Test_PingHandler_Failed() {
 	r := httptest.NewRequest(http.MethodGet, "/ping", nil)
 	ctx := context.WithValue(r.Context(), config.RequestID, uuid.NewV4().String())
 
-	p.nj.Close()
 	controller.Ping()(w, r.WithContext(ctx))
 
 	assert.Equal(p.T(), http.StatusServiceUnavailable, w.Code)
