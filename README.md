@@ -123,6 +123,7 @@ Environment variables for Development use **config-example.yaml**, Change the fi
 + `POSTGRES_PARAMS` - Database params, use space if more than one param (sslmode=disable)
 + `POSTGRES_MAX_OPEN_CONN` - Database max open connection
 + `POSTGRES_MAX_IDLE_CONN` - Database max idle connection
++ `POSTGRES_DEBUG_ENABLED` - Enable debug mode
 + `POSTGRES_LOG_LEVEL` - Database log level, default is 2
     - `1` - Silent
     - `2` - Error

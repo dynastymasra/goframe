@@ -3,7 +3,7 @@ module github.com/dynastymasra/goframe
 go 1.15
 
 require (
-	github.com/dynastymasra/cookbook v1.10.1-0.20201112075117-2c0cd2e48cba
+	github.com/dynastymasra/cookbook v1.10.1-0.20201116032050-e5d6ec1f2c2c
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.8.0
 	github.com/satori/go.uuid v1.2.0

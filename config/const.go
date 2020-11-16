@@ -16,15 +16,16 @@ const (
 	envLoggerCaller = "LOGGER_CALLER_ENABLED"
 
 	// Postgres config
-	envPostgresDatabase    = "POSTGRES_DATABASE"
-	envPostgresHost        = "POSTGRES_HOST"
-	envPostgresPort        = "POSTGRES_PORT"
-	envPostgresUsername    = "POSTGRES_USERNAME"
-	envPostgresPassword    = "POSTGRES_PASSWORD"
-	envPostgresParams      = "POSTGRES_PARAMS"
-	envPostgresMaxIdleConn = "POSTGRES_MAX_IDLE_CONN"
-	envPostgresMaxOpenConn = "POSTGRES_MAX_OPEN_CONN"
-	envPostgresLogLevel    = "POSTGRES_LOG_LEVEL"
+	envPostgresDatabase     = "POSTGRES_DATABASE"
+	envPostgresHost         = "POSTGRES_HOST"
+	envPostgresPort         = "POSTGRES_PORT"
+	envPostgresUsername     = "POSTGRES_USERNAME"
+	envPostgresPassword     = "POSTGRES_PASSWORD"
+	envPostgresParams       = "POSTGRES_PARAMS"
+	envPostgresMaxIdleConn  = "POSTGRES_MAX_IDLE_CONN"
+	envPostgresMaxOpenConn  = "POSTGRES_MAX_OPEN_CONN"
+	envPostgresLogLevel     = "POSTGRES_LOG_LEVEL"
+	envPostgresDebugEnabled = "POSTGRES_DEBUG_ENABLED"
 
 	// Neo4J config
 	envNeo4JAddress         = "NEO4J_ADDRESS"
